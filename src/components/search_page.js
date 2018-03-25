@@ -1,113 +1,94 @@
-import React,{Component} from 'react';
-import {Field,reduxForm} from 'redux-form';
-import {connect} from 'react-redux';
+import React, { Component } from "react";
+import { Field, reduxForm } from "redux-form";
+import { connect } from "react-redux";
 
-import {Label} from 'react-bootstrap';
-import {Button} from 'react-bootstrap';
+import { Label } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
-import {fetchRestaurant} from '../actions';
-import _ from 'lodash';
+import { fetchRestaurant } from "../actions";
+import _ from "lodash";
 
 class Search extends Component {
+  onSubmit(values) {
+    this.props.fetchRestaurant(values);
+  }
 
+  renderRestaurant({restaurant}) {
+    // const name = Restaurants.restaurants.map(name => name.restaurant.name);
+    // const res_id = Restaurants.restaurants.map(
+    //   res_id => res_id.restaurant.R.res_id
+    // );
+    // const id = Restaurants.restaurants.map(id => id.restaurant.id);
+    // console.log("Name is ", name);
 
-	onSubmit(values){		
-						this.props.fetchRestaurant(values);
-					}
+    return (
+      <li key={restaurant.R.res_id}>
+        {" "}
+        {restaurant.name}
+        {restaurant.R.res_id}{" "}
+      </li>
+    );
+  }
 
-		renderRestaurant(Restaurants){		
-	
-			 const name = Restaurants.restaurants.map(name=>name.restaurant.name);
-			 const res_id = Restaurants.restaurants.map(res_id=>res_id.restaurant.R.res_id);
-			 const id = Restaurants.restaurants.map(id=>id.restaurant.id);
-			 console.log('Name is ', name);
+  renderComponent(field) {
+    const { meta: { error, touched } } = field;
+    const className = `form-group ${touched && error ? "has-danger" : ""}`;
 
-			 return(
-			 			<li key={id}> {name} 
-			 			{id} </li>
+    return (
+      <div className={className}>
+        <input className="form-control" type="text" {...field.input} />
+        <div className="text-help">{touched ? error : ""}</div>
+      </div>
+    );
+  }
 
-			 	)
-			}
+  render() {
+    return (
+      <div>
+        <h4>
+          <div className="RestaurantSearchDiv"> Restaurant Search </div>
+        </h4>
 
-			renderComponent(field){
+        <form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}>
+          <h3>
+            <Label bsStyle="info">City Name</Label>
+          </h3>
+          <Field name="City" component={this.renderComponent} />
+          <h3>
+            <Label bsStyle="info">Cuisines e.g Indian,chinese</Label>
+          </h3>
+          <Field name="Cuisines" component={this.renderComponent} />
 
-				const {meta:{error,touched}} = field;
-				const className = `form-group ${touched && error ? 'has-danger':''}`;
+          <h3>
+            <button className="btn btn-primary ">Submit</button>
+          </h3>
+        </form>
 
-				return(
-					<div className={className}>
-						<input className='form-control'
-								type="text"
-								{...field.input}
-						/>
-						<div className='text-help'>
-							{touched ? error:''}
-						</div>
-					</div>
-				)
-			}
-			
-
-	render(){		
-
-		  return(
-		  	<div>
-
-		  	  <h4>
-		  	   <div className='RestaurantSearchDiv'> Restaurant Search </div>	
-		  	  </h4>
-
-		  	   <form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}>
-		  	   		<h3>
-			  	   <Label bsStyle="info">City Name</Label>
-			  	   </h3>
-		  	   	 	<Field
-		  	   	 		name='City'
-		  	   	 		component={this.renderComponent}
-		  	   	 	/>
-		  	   	  <h3>
-
-		  	  	 <Label bsStyle="info">Cuisines e.g Indian,chinese</Label>
-		  	  	 </h3>
-		  	   	   	<Field
-		  	   	 		name='Cuisines'
-		  	   	 		component={this.renderComponent}
-		  	   	 	/>
-		  	   	  
-		  	   	  <h3>
-		  	   	  <button className='btn btn-primary '>Submit</button>
-		  	   	  </h3>
-		  	   </form>
-
-		  	   <h4>
-		  	   		<div> Restaurant Details </div>
-		  	   		 <ul>{this.props.Restaurants.map(this.renderRestaurant)}</ul>
-		  	    </h4>
-		  	</div>
-		  	)
-	}
+        <h4>
+          <div> Restaurant Details </div>
+          <ul>{this.props.Restaurants.Restaurants !== undefined ? this.props.Restaurants.Restaurants.restaurants.map(this.renderRestaurant) : ''}</ul>
+        </h4>
+      </div>
+    );
+  }
 }
 
-function validate(values){
+function validate(values) {
+  const errors = {};
 
-	const errors = {}
+  if (!values.City) errors.City = "Enter City";
 
-	if(!values.City)
-		errors.City='Enter City';
+  if (!values.Cuisines) errors.Cuisines = "enter Cuisines";
 
-	if(!values.Cuisines)
-		errors.Cuisines='enter Cuisines';
-
-	return errors;
+  return errors;
 }
 
-function mapStateToProps({Restaurants}){	
-			console.log('Restaurants are:',{Restaurants});
-							return { Restaurants };
+function mapStateToProps({ Restaurants }) {
+  console.log("Restaurants are:", { Restaurants });
+  return { Restaurants };
 }
 
 export default reduxForm({
-	validate,
-	form:'SearchForm'
-})(connect(mapStateToProps,{fetchRestaurant})(Search));
-
+  validate,
+  form: "SearchForm"
+})(connect(mapStateToProps, { fetchRestaurant })(Search));
