@@ -6,11 +6,11 @@ export default function (state=[],action){
 	switch(action.type){
 
 					  case FETCH_RESTAURANT :
-					  			return  state.concat([action.payload.data]);
-					  		
+					  	 return  _.map(state.concat([action.payload.data]));
+					  		//return _.mapKeys(action.payload.data],'id');
+					  	//	return { ...state, { ...state[action.payload.data],'id'}  }
 				      default :
-					 	 	return state;	
-					 
-
-	}
+					 	 	return state;		}
 }
+
+

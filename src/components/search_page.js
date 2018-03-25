@@ -12,15 +12,39 @@ class Search extends Component {
 
 
 	onSubmit(values){		
-			this.props.fetchRestaurant(values);
-}
+						this.props.fetchRestaurant(values);
+					}
 
-		renderRestaurant(values){		
-			 console.log('this',values);
-			 const names = values.name;
+		renderRestaurant(Restaurants){		
+	
+			 const name = Restaurants.restaurants.map(name=>name.restaurant.name);
+			 const res_id = Restaurants.restaurants.map(res_id=>res_id.restaurant.R.res_id);
+			 const id = Restaurants.restaurants.map(id=>id.restaurant.id);
+			 console.log('Name is ', name);
 
-			 console.log('name is ',names);
-				return <li key={values.id}>{values.name}</li>
+			 return(
+			 			<li key={id}> {name} 
+			 			{id} </li>
+
+			 	)
+			}
+
+			renderComponent(field){
+
+				const {meta:{error,touched}} = field;
+				const className = `form-group ${touched && error ? 'has-danger':''}`;
+
+				return(
+					<div className={className}>
+						<input className='form-control'
+								type="text"
+								{...field.input}
+						/>
+						<div className='text-help'>
+							{touched ? error:''}
+						</div>
+					</div>
+				)
 			}
 			
 
@@ -35,31 +59,29 @@ class Search extends Component {
 
 		  	   <form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}>
 		  	   		<h3>
-			  	   <Label bsStyle="info">City</Label>
+			  	   <Label bsStyle="info">City Name</Label>
 			  	   </h3>
-		  	   	  <Field
-		  	   	  	  label="City Name"
-		  	   	  	  name='city'
-		  	   	  	  component='Input'
-		  	   	  	  type='text'
-		  	   	  />
+		  	   	 	<Field
+		  	   	 		name='City'
+		  	   	 		component={this.renderComponent}
+		  	   	 	/>
 		  	   	  <h3>
+
 		  	  	 <Label bsStyle="info">Cuisines e.g Indian,chinese</Label>
 		  	  	 </h3>
-		  	   	 <Field
-		  	   	  	  label="Cuisines"
-		  	   	  	  name='cuisines'
-		  	   	  	  component='Input'
-		  	   	  	  type='text'
-		  	   	  />
+		  	   	   	<Field
+		  	   	 		name='Cuisines'
+		  	   	 		component={this.renderComponent}
+		  	   	 	/>
+		  	   	  
 		  	   	  <h3>
-		  	   	  <button className='btn btn-primary'>Submit</button>
+		  	   	  <button className='btn btn-primary '>Submit</button>
 		  	   	  </h3>
 		  	   </form>
 
 		  	   <h4>
 		  	   		<div> Restaurant Details </div>
-		  	   		 <ul>{this.props.values.map(this.renderRestaurant)}</ul>
+		  	   		 <ul>{this.props.Restaurants.map(this.renderRestaurant)}</ul>
 		  	    </h4>
 		  	</div>
 		  	)
@@ -70,17 +92,18 @@ function validate(values){
 
 	const errors = {}
 
-	if(!values.city)
-		errors.title='Enter City';
+	if(!values.City)
+		errors.City='Enter City';
 
-	if(!values.cusine)
-		errors.title='enter cusine';
+	if(!values.Cuisines)
+		errors.Cuisines='enter Cuisines';
 
 	return errors;
 }
 
-function mapStateToProps({values}){	
-							return { values };
+function mapStateToProps({Restaurants}){	
+			console.log('Restaurants are:',{Restaurants});
+							return { Restaurants };
 }
 
 export default reduxForm({
