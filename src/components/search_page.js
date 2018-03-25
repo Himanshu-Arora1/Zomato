@@ -66,7 +66,7 @@ class Search extends Component {
 
         <h4>
           <div> Restaurant Details </div>
-          <ul>{this.props.Restaurants.Restaurants !== undefined ? this.props.Restaurants.Restaurants.restaurants.map(this.renderRestaurant) : ''}</ul>
+          <ul>{this.props.restaurants.map(this.renderRestaurant)}</ul>
         </h4>
       </div>
     );
@@ -83,9 +83,9 @@ function validate(values) {
   return errors;
 }
 
-function mapStateToProps({ Restaurants }) {
-  console.log("Restaurants are:", { Restaurants });
-  return { Restaurants };
+function mapStateToProps({ restaurants }) {
+  console.log("Restaurants are:", { restaurants });
+  return { restaurants };
 }
 
 export default reduxForm({
