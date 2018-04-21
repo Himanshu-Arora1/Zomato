@@ -1,14 +1,10 @@
-import { FETCH_RESTAURANT } from "../actions";
-import _ from "lodash";
+import { FETCH_RESTAURANTS,FETCH_RESTAURANT } from "../actions";
 
 export default function(state = [], action) {
   switch (action.type) {
-    case FETCH_RESTAURANT:
-      // return  _.map(state.concat([action.payload.data]));
-      return state.concat(action.payload.data.restaurants);
-    //return _.mapKeys(action.payload.data],'id');
-    //	return { ...state, { ...state[action.payload.data],'id'}  }
-    default:
+    case FETCH_RESTAURANTS:
+            return state.concat(action.payload.data.restaurants);
+     default:
       return state;
   }
 }

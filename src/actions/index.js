@@ -1,17 +1,34 @@
 import axios from "axios";
 
-export const FETCH_RESTAURANT = "fetch_restaurant";
+export const FETCH_RESTAURANTS = "fetch_restaurants";
+export const FETCH_RESTAURANT =  "fetch_restaurant";
 
-export function fetchRestaurant(values, callBack) {
-  const ROOT_URL = "https://developers.zomato.com/api/v2.1/search?";
-  const API_KEY = "46327a3a1c3db149805d3ba2cf8a4abb";
+    const ROOT_URL = "https://developers.zomato.com/api/v2.1/search?";
+      const API_KEY = "46327a3a1c3db149805d3ba2cf8a4abb";
 
-  const request = axios.get(
-    `${ROOT_URL}apikey=${API_KEY}&q=${values.City}&cuisines=${values.Cuisines}`
-  );
+export  function fetchRestaurant(City,Cuisines) {
 
-  return {
-    type: FETCH_RESTAURANT,
-    payload: request
-  };
-}
+  const  request = axios.get(`${ROOT_URL}apikey=${API_KEY}&q=${City}&cuisines=${Cuisines}`);
+
+      return{
+        type:FETCH_RESTAURANTS,
+        payload:request
+            }
+    }
+
+export function fetchSingleRestaurant(id){
+
+    const RESTAURANT_URL = "https://developers.zomato.com/api/v2.1/restaurant?";
+
+     console.log(id);
+    
+     const request = axios.get(`${RESTAURANT_URL}apikey=${API_KEY}&res_id=${id}`);
+
+     return {
+            type:FETCH_RESTAURANT,
+            payload:request
+        }
+
+    }
+
+    
