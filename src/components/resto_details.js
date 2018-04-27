@@ -1,28 +1,25 @@
 import React,{Component} from 'react';
-import { fetchSingleRestaurant } from "../actions";
 import {connect} from 'react-redux';
-import { browserHistory } from 'react-router';
+import {withRouter} from "react-router-dom";
 
 class RestoDetails extends Component{
 
-     singleMovement(singleRestaurant){
-        const path = '/info/details';
-            browserHistory.push({
-          pathname: path
-        });
+    singleMovement(id){
+        const path='/info/details';
+        
+        this.props.history.push({
+            pathname:path,
+            id:id
+        })
     }
 
    render(){
-
-    if(this.props.singleRestaurant.length>0){
-                this.singleMovement(this.props.singleRestaurant);
-        }
     
         return(
            <div className='smallDiv'>
                 <div>
                     <img src={this.props.restaurant.thumb} alt='sorry no image' key={this.props.restaurant.id}
-                     onClick={() => this.props.fetchSingleRestaurant(this.props.restaurant.R.res_id)} />
+                     onClick={() => this.singleMovement(this.props.restaurant.R.res_id)} />
                 </div>
                 <br/>
                 <div className='smallDiv2'>
@@ -38,12 +35,9 @@ class RestoDetails extends Component{
     }
 }
 
-function mapStateToProps({ singleRestaurant }) { 
-                    console.log('singl',singleRestaurant);
-                     return { singleRestaurant};
-  } 
 
-export default connect(mapStateToProps,{fetchSingleRestaurant})(RestoDetails);
+
+export default withRouter(RestoDetails);
 
 
 

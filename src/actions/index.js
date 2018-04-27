@@ -20,7 +20,7 @@ export function fetchSingleRestaurant(id){
 
     const RESTAURANT_URL = "https://developers.zomato.com/api/v2.1/restaurant?";
 
-     console.log(id);
+     console.log('id in action',id);
     
      const request = axios.get(`${RESTAURANT_URL}apikey=${API_KEY}&res_id=${id}`);
 

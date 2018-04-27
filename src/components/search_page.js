@@ -4,7 +4,6 @@ import { Field, reduxForm } from "redux-form";
 import { Label } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 
-import {browserHistory} from 'react-router';
 //import {Link} from 'react-router-dom';
 // import '../../style/style.css';
 

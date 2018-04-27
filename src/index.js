@@ -1,7 +1,7 @@
 //library
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route,browserHistory } from "react-router-dom";
 
 //redux
 import { Provider } from "react-redux";
@@ -25,7 +25,7 @@ ReactDOM.render(
     <BrowserRouter>
       <div>
         <Switch>
-          <Route path="/details" component={SingleRestaurant} />
+          <Route path="/info/details" component={SingleRestaurant} />
           <Route path="/info" component={RestoInfo} />
           <Route path="/" component={Search} />
           </Switch>

@@ -12,15 +12,13 @@ class RestoInfo extends Component {
   }
 
   renderRestaurant({restaurant}){
-      
       return (
-            <RestoDetails restaurant={restaurant}  />
+            <RestoDetails restaurant={restaurant} />
            // <RestoDetails restaurant={restaurant} />
              )
   }
 
   render(){
-
       return(
             <div>
               <div className="jumbotron heading2">
