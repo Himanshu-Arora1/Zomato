@@ -102,3 +102,8 @@ heading2{
     list-style-type:none;
 }
 
+.singleRestaurantImage{
+    margin:50px;
+    width:60px;
+    height: 5px;
+}
